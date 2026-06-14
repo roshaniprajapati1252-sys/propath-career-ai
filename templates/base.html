@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ProPath – AI Career Co‑pilot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">Pro<span>Path</span></div>
+    <div class="tagline">AI Career Co‑pilot for Students & Freshers</div>
+  </header>
+
+  <main class="main">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    Built by Roshani Kumari · Python + Flask · LLM features coming soon
+  </footer>
+</body>
+</html>
