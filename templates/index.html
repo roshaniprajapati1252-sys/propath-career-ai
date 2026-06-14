@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section>
+  <h1>Welcome to ProPath</h1>
+  <p>
+    Plan your career with GPA insights, skill-gap analysis, salary estimates, interview Q&A
+    and project ideas – all in one place.
+  </p>
+</section>
+
+<section class="grid">
+  <!-- GPA -->
+  <div class="card">
+    <h2>GPA Calculator</h2>
+    <form method="post">
+      <input type="hidden" name="form_type" value="gpa">
+      {% for i in range(1, 7) %}
+        <label>Subject {{ i }} (marks)</label>
+        <input type="number" name="sub{{ i }}" min="0" max="100" step="0.01">
+      {% endfor %}
+      <button type="submit">Calculate</button>
+    </form>
+
+    {% if gpa_result %}
+      <div class="result">
+        <p>CGPA: <strong>{{ gpa_result[0] }}</strong></p>
+        <p>Percentage: <strong>{{ gpa_result[1] }}%</strong></p>
+        <p>Grade: <strong>{{ gpa_result[2] }}</strong></p>
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- Skill Gap -->
+  <div class="card">
+    <h2>Skill Gap Analyzer</h2>
+    <form method="post">
+      <input type="hidden" name="form_type" value="skills">
+
+      <h3>Your Level (0–10)</h3>
+      <label>Technical</label>
+      <input type="number" name="tech_user" min="0" max="10" value="5">
+
+      <label>System Design</label>
+      <input type="number" name="sys_user" min="0" max="10" value="3">
+
+      <label>Leadership</label>
+      <input type="number" name="lead_user" min="0" max="10" value="4">
+
+      <label>Communication</label>
+      <input type="number" name="comm_user" min="0" max="10" value="6">
+
+      <h3>Required Level (0–10)</h3>
+      <label>Technical</label>
+      <input type="number" name="tech_req" min="0" max="10" value="8">
+
+      <label>System Design</label>
+      <input type="number" name="sys_req" min="0" max="10" value="9">
+
+      <label>Leadership</label>
+      <input type="number" name="lead_req" min="0" max="10" value="8">
+
+      <label>Communication</label>
+      <input type="number" name="comm_req" min="0" max="10" value="8">
+
+      <button type="submit">Analyze</button>
+    </form>
+
+    {% if skill_result %}
+      <div class="result">
+        <p>Skill match: <strong>{{ skill_result[0] }}%</strong></p>
+        <p>Gap to close: <strong>{{ skill_result[1] }}%</strong></p>
+        <p>Estimated prep time: <strong>{{ skill_result[2] }} months</strong></p>
+        <p>Top priority skill: <strong>{{ skill_result[3] }}</strong></p>
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- Salary Estimator -->
+  <div class="card">
+    <h2>Salary Estimator (Fresher)</h2>
+    <form method="post">
+      <input type="hidden" name="form_type" value="salary">
+
+      <label>Experience (years)</label>
+      <input type="number" name="experience" min="0" max="10" step="0.5" value="0">
+
+      <label>Skill level</label>
+      <select name="skill_level">
+        <option value="beginner">Beginner</option>
+        <option value="intermediate">Intermediate</option>
+        <option value="advanced">Advanced</option>
+      </select>
+
+      <button type="submit">Estimate</button>
+    </form>
+
+    {% if salary_result %}
+      <div class="result">
+        <p>Low: <strong>{{ salary_result[0] }} LPA</strong></p>
+        <p>Average: <strong>{{ salary_result[1] }} LPA</strong></p>
+        <p>High: <strong>{{ salary_result[2] }} LPA</strong></p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<section class="grid">
+  <!-- Interview QA -->
+  <div class="card">
+    <h2>Interview Q&A (Sample)</h2>
+    {% for qa in interview_qa %}
+      <div class="qa">
+        <p class="qa-cat">{{ qa.category }}</p>
+        <p class="qa-q"><strong>Q:</strong> {{ qa.question }}</p>
+        <p class="qa-a"><strong>A:</strong> {{ qa.answer }}</p>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Project Ideas -->
+  <div class="card">
+    <h2>Project Ideas (Sample)</h2>
+    {% for proj in project_ideas %}
+      <div class="project">
+        <p class="proj-title">{{ proj.title }} <span class="badge">{{ proj.level }}</span></p>
+        <p class="proj-desc">{{ proj.desc }}</p>
+        <p class="proj-tags">
+          {% for tag in proj.tags %}
+            <span class="tag">{{ tag }}</span>
+          {% endfor %}
+        </p>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% endblock %}
